@@ -3,12 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package logicaNegocioReto1;
+package businessLogic;
+
+import clases.User;
 
 /**
  *
- * @author 2dam
+ * @author Usuario
  */
-public enum UserPrivilege {
-    USER,ADMIN;
+public interface LogicCliente {
+    public User login(String id,String password);
+    public boolean registro(User user);
 }
