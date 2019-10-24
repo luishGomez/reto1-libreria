@@ -6,12 +6,17 @@
 package businessLogic;
 
 import clases.User;
+import exceptions.DAOException;
+import exceptions.LogicException;
+import exceptions.LoginIDException;
+import exceptions.PasswordException;
+import exceptions.ServerException;
 
 /**
  *
  * @author Usuario
  */
 public interface LogicCliente {
-    public User login(String id,String password);
+    public User login(String id,String password) throws LogicException,PasswordException,LoginIDException, DAOException, ServerException;
     public boolean registro(User user);
 }
