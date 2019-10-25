@@ -114,7 +114,7 @@ public class LogicClienteImplementation implements LogicCliente{
                 //Ahora intempretamos el resutado
                 switch(resultado.getOpc()){
                     case 1:
-                        retorno=(Boolean)mensaje.getData();
+                        retorno=true;
                         break;
                     case -1:
                         intentos++;
