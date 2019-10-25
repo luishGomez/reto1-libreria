@@ -7,6 +7,7 @@ package businessLogic;
 
 import clases.User;
 import exceptions.DAOException;
+import exceptions.EsperaCompletaException;
 import exceptions.LogicException;
 import exceptions.LoginIDException;
 import exceptions.PasswordException;
@@ -18,5 +19,5 @@ import exceptions.ServerException;
  */
 public interface LogicCliente {
     public User login(String id,String password) throws LogicException,PasswordException,LoginIDException, DAOException, ServerException;
-    public boolean registro(User user) throws LogicException,LoginIDException, DAOException,ServerException;
+    public boolean registro(User user) throws EsperaCompletaException,LogicException,LoginIDException, DAOException,ServerException;
 }

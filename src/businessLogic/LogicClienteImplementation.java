@@ -8,6 +8,7 @@ package businessLogic;
 import clases.Mensaje;
 import clases.User;
 import exceptions.DAOException;
+import exceptions.EsperaCompletaException;
 import exceptions.LogicException;
 import exceptions.LoginIDException;
 import exceptions.PasswordException;
@@ -87,7 +88,7 @@ public class LogicClienteImplementation implements LogicCliente{
     }
     
     @Override
-    public boolean registro(User user) throws LogicException,LoginIDException, DAOException,ServerException {
+    public boolean registro(User user) throws EsperaCompletaException,LogicException,LoginIDException, DAOException,ServerException {
         int intentos=0;
         boolean repetir=true;
         boolean retorno=false;
@@ -137,6 +138,8 @@ public class LogicClienteImplementation implements LogicCliente{
                     flujo_salida.close();
                 if(miSocket!=null)
                     miSocket.close();
+                if(intentos==10)
+                    throw new EsperaCompletaException();
             }catch(IOException e){
                 LOGGER.severe(e.getMessage());
             }
