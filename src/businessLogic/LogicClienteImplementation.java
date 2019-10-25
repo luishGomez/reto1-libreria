@@ -124,6 +124,8 @@ public class LogicClienteImplementation implements LogicCliente{
                     case -6:
                         throw new ServerException();
                 }
+                if(intentos==10)
+                    throw new EsperaCompletaException();
             }
         }catch(IOException e){
             LOGGER.severe(e.getMessage());
@@ -138,8 +140,7 @@ public class LogicClienteImplementation implements LogicCliente{
                     flujo_salida.close();
                 if(miSocket!=null)
                     miSocket.close();
-                if(intentos==10)
-                    throw new EsperaCompletaException();
+                
             }catch(IOException e){
                 LOGGER.severe(e.getMessage());
             }
