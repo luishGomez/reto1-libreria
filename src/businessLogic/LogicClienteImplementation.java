@@ -28,7 +28,8 @@ public class LogicClienteImplementation implements LogicCliente{
     private final int port=Integer.parseInt(ResourceBundle.getBundle("businessLogic.logicConfig").getString("port"));
     private final String ip=ResourceBundle.getBundle("businessLogic.logicConfig").getString("ip");
     @Override
-    public User login(String id, String password) throws LogicException,PasswordException,LoginIDException, DAOException, ServerException{
+    public User login(String id, String password) throws LogicException,
+            PasswordException,LoginIDException, DAOException, ServerException, EsperaCompletaException{
         int intentos=0;
         boolean repetir=true;
         User user=null;
@@ -80,6 +81,9 @@ public class LogicClienteImplementation implements LogicCliente{
                     flujo_salida.close();
                 if(miSocket!=null)
                     miSocket.close();
+                if(intentos == 10){
+                    throw new EsperaCompletaException();
+                }
             }catch(IOException e){
                 LOGGER.severe(e.getMessage());
             }
