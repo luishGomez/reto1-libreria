@@ -18,5 +18,5 @@ import exceptions.ServerException;
  */
 public interface LogicCliente {
     public User login(String id,String password) throws LogicException,PasswordException,LoginIDException, DAOException, ServerException;
-    public boolean registro(User user);
+    public boolean registro(User user) throws LogicException,LoginIDException, DAOException,ServerException;
 }

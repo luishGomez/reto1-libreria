@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 
 /**
  *
- * @author Usuario
+ * @author Luis & Ricardo
  */
 public class LogicClienteImplementation implements LogicCliente{
     private static final java.util.logging.Logger LOGGER = java.util.logging.Logger.getLogger("businessLogic.LogicClienteImplementation");
@@ -57,7 +57,7 @@ public class LogicClienteImplementation implements LogicCliente{
                         repetir=true;
                         break;
                     case -3:
-                        throw new LoginIDException();
+                        throw new LoginIDException("Ese ID no existe");
                     case -4:
                         throw new PasswordException();
                     case -5:
@@ -87,8 +87,61 @@ public class LogicClienteImplementation implements LogicCliente{
     }
     
     @Override
-    public boolean registro(User user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public boolean registro(User user) throws LogicException,LoginIDException, DAOException,ServerException {
+        int intentos=0;
+        boolean repetir=true;
+        boolean retorno=false;
+        //Declaro socket y los flujos vacios
+        Socket miSocket=null;
+        ObjectOutputStream flujo_salida=null;
+        ObjectInputStream flujo_entrada=null;
+        try{
+            //Enlazamos el socket y los flujos
+            miSocket=new Socket(ip,port);
+            flujo_salida=new ObjectOutputStream(miSocket.getOutputStream());
+            flujo_entrada=new ObjectInputStream(miSocket.getInputStream());
+            while(repetir && intentos<10){
+                repetir=false;
+                //Empezamos la comunicación
+                Mensaje mensaje=new Mensaje(1,user);
+                flujo_salida.writeObject(mensaje);
+                Mensaje resultado=(Mensaje)flujo_entrada.readObject();
+                //Ahora intempretamos el resutado
+                switch(resultado.getOpc()){
+                    case 1:
+                        retorno=(Boolean)mensaje.getData();
+                        break;
+                    case -1:
+                        intentos++;
+                        //DUERME UN SEGUNDO
+                        repetir=true;
+                        break;
+                    case -2:
+                        throw new LoginIDException("Ya existe alguien con ese IDE");
+                    case -5:
+                        throw new DAOException();
+                    case -6:
+                        throw new ServerException();
+                }
+            }
+        }catch(IOException e){
+            LOGGER.severe(e.getMessage());
+            throw new LogicException("El servidor no responde");
+        }catch(ClassNotFoundException e){
+            LOGGER.severe(e.getMessage());
+        }finally{
+            try{
+                if(flujo_entrada!=null)
+                    flujo_entrada.close();
+                if(flujo_salida!=null)
+                    flujo_salida.close();
+                if(miSocket!=null)
+                    miSocket.close();
+            }catch(IOException e){
+                LOGGER.severe(e.getMessage());
+            }
+        }
+        return retorno;
     }
     
 }
