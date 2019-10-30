@@ -16,6 +16,7 @@ import exceptions.ServerException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import static java.lang.Thread.sleep;
 import java.net.Socket;
 import java.util.ResourceBundle;
 
@@ -37,12 +38,14 @@ public class LogicClienteImplementation implements LogicCliente{
         Socket miSocket=null;
         ObjectOutputStream flujo_salida=null;
         ObjectInputStream flujo_entrada=null;
-        try{
-            //Enlazamos el socket y los flujos
-            miSocket=new Socket(ip,port);
-            flujo_salida=new ObjectOutputStream(miSocket.getOutputStream());
-            flujo_entrada=new ObjectInputStream(miSocket.getInputStream());
-            while(repetir && intentos<10){
+        while(repetir && intentos<5){
+            try{
+                //Enlazamos el socket y los flujos
+                miSocket=new Socket(ip,port);
+                miSocket.setSoTimeout(3000);
+                flujo_salida=new ObjectOutputStream(miSocket.getOutputStream());
+                flujo_entrada=new ObjectInputStream(miSocket.getInputStream());
+                
                 repetir=false;
                 //Empezamos la comunicación
                 Mensaje mensaje=new Mensaje(2,new User(id,password));
@@ -55,7 +58,8 @@ public class LogicClienteImplementation implements LogicCliente{
                         break;
                     case -1:
                         intentos++;
-                        //DUERME UN SEGUNDO
+                        LOGGER.info("Espera");
+                        sleep(1000);
                         repetir=true;
                         break;
                     case -3:
@@ -67,25 +71,28 @@ public class LogicClienteImplementation implements LogicCliente{
                     case -6:
                         throw new ServerException();
                 }
-            }
-        }catch(IOException e){
-            LOGGER.severe(e.getMessage());
-            throw new LogicException("El servidor no responde");
-        }catch(ClassNotFoundException e){
-            LOGGER.severe(e.getMessage());
-        }finally{
-            try{
-                if(flujo_entrada!=null)
-                    flujo_entrada.close();
-                if(flujo_salida!=null)
-                    flujo_salida.close();
-                if(miSocket!=null)
-                    miSocket.close();
-                if(intentos == 10){
-                    throw new EsperaCompletaException();
-                }
+                
+            }catch(InterruptedException e){
+                LOGGER.info("Despierta");
             }catch(IOException e){
                 LOGGER.severe(e.getMessage());
+                throw new LogicException("El servidor no responde");
+            }catch(ClassNotFoundException e){
+                LOGGER.severe(e.getMessage());
+            }finally{
+                try{
+                    if(flujo_entrada!=null)
+                        flujo_entrada.close();
+                    if(flujo_salida!=null)
+                        flujo_salida.close();
+                    if(miSocket!=null)
+                        miSocket.close();
+                    if(intentos == 5){
+                        throw new EsperaCompletaException();
+                    }
+                }catch(IOException e){
+                    LOGGER.severe(e.getMessage());
+                }
             }
         }
         return user;
@@ -100,12 +107,14 @@ public class LogicClienteImplementation implements LogicCliente{
         Socket miSocket=null;
         ObjectOutputStream flujo_salida=null;
         ObjectInputStream flujo_entrada=null;
-        try{
-            //Enlazamos el socket y los flujos
-            miSocket=new Socket(ip,port);
-            flujo_salida=new ObjectOutputStream(miSocket.getOutputStream());
-            flujo_entrada=new ObjectInputStream(miSocket.getInputStream());
-            while(repetir && intentos<10){
+        while(repetir && intentos<5){
+            try{
+                //Enlazamos el socket y los flujos
+                miSocket=new Socket(ip,port);
+                miSocket.setSoTimeout(3000);
+                flujo_salida=new ObjectOutputStream(miSocket.getOutputStream());
+                flujo_entrada=new ObjectInputStream(miSocket.getInputStream());
+                
                 repetir=false;
                 //Empezamos la comunicación
                 Mensaje mensaje=new Mensaje(1,user);
@@ -118,7 +127,8 @@ public class LogicClienteImplementation implements LogicCliente{
                         break;
                     case -1:
                         intentos++;
-                        //DUERME UN SEGUNDO
+                        LOGGER.info("Espera");
+                        sleep(1000);
                         repetir=true;
                         break;
                     case -2:
@@ -128,25 +138,28 @@ public class LogicClienteImplementation implements LogicCliente{
                     case -6:
                         throw new ServerException();
                 }
-                if(intentos==10)
+                if(intentos==5)
                     throw new EsperaCompletaException();
-            }
-        }catch(IOException e){
-            LOGGER.severe(e.getMessage());
-            throw new LogicException("El servidor no responde");
-        }catch(ClassNotFoundException e){
-            LOGGER.severe(e.getMessage());
-        }finally{
-            try{
-                if(flujo_entrada!=null)
-                    flujo_entrada.close();
-                if(flujo_salida!=null)
-                    flujo_salida.close();
-                if(miSocket!=null)
-                    miSocket.close();
                 
+            }catch(InterruptedException e){
+                LOGGER.info("Despierta");
             }catch(IOException e){
                 LOGGER.severe(e.getMessage());
+                throw new LogicException("El servidor no responde");
+            }catch(ClassNotFoundException e){
+                LOGGER.severe(e.getMessage());
+            }finally{
+                try{
+                    if(flujo_entrada!=null)
+                        flujo_entrada.close();
+                    if(flujo_salida!=null)
+                        flujo_salida.close();
+                    if(miSocket!=null)
+                        miSocket.close();
+                    
+                }catch(IOException e){
+                    LOGGER.severe(e.getMessage());
+                }
             }
         }
         return retorno;
