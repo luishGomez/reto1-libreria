@@ -1,15 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package clases;
 
 import java.io.Serializable;
 
 /**
- *
- * @author 2dam
+ * Es el mensaje que enviamos en las peticiones contra el servidor.
+ * It’s the message we send in the requests against the server.
+ * @author Equipo.
  */
 public class Mensaje implements Serializable{
     private static final long serialVersionUID = 1L;

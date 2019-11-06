@@ -6,8 +6,9 @@
 package clases;
 
 /**
- *
- * @author 2dam
+ * Los tipos de estados de los usuarios.
+ * The user status types.
+ * @author Equipo.
  */
 public enum UserStatus {
     ENABLED,DISABLED;

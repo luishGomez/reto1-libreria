@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package exceptions;
 
 /**
- *
- * @author 2dam
+ * Excepción que ocurre cuando hay algún error en la parte de LogicCliente.
+ * Exception that occurs when there is some error in the Logiccliente part.
+ * @author Ricardo.
  */
 public class LogicException extends Exception{
     public LogicException(String message){

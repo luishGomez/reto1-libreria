@@ -1,16 +1,12 @@
-/*
-* To change this license header, choose License Headers in Project Properties.
-* To change this template file, choose Tools | Templates
-* and open the template in the editor.
-*/
 package clases;
 
 import java.io.Serializable;
 import java.util.Date;
 
 /**
- *
- * @author 2dam
+ * Es la clase usuario que tienen todos los datos necesarios.
+ * It is the user class that has all the necessary data.
+ * @author Equipo.
  */
 public class User implements Serializable{
     private static final long serialVersionUID = 1L;

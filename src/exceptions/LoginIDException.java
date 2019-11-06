@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package exceptions;
 
 /**
- *
- * @author 2dam
+ * Excepción que ocurre cuando el Login del usuario es erróneo o ya existe.
+ * Exception that occurs when the user’s login is erroneous or already exists.
+ * @author Ricardo.
  */
 public class LoginIDException extends Exception{
     public LoginIDException(String message){

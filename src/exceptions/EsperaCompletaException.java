@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package exceptions;
 
 /**
- *
- * @author 2dam
+ * Excepción que ocurre cuando la espera establecida a sido superada.
+ * Exception that occurs when the established wait has been exceeded.
+ * @author Ricardo.
  */
 public class EsperaCompletaException extends Exception{
     public EsperaCompletaException(String message){
