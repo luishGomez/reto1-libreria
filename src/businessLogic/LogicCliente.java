@@ -48,4 +48,6 @@ public interface LogicCliente {
      * @throws ServerException Error del servidor. / Server error.
      */
     public boolean registro(User user) throws EsperaCompletaException,LogicException,LoginIDException, DAOException,ServerException;
+    
+    public void finAcceso(String login)throws EsperaCompletaException,LogicException,DAOException,ServerException;
 }

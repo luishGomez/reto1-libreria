@@ -1,7 +1,7 @@
 package clases;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * Es la clase usuario que tienen todos los datos necesarios.
@@ -17,13 +17,13 @@ public class User implements Serializable{
     private UserStatus status;
     private UserPrivilege privilege;
     private String password;
-    private Date lastAccess;
-    private Date lastPasswordChange;
+    private Timestamp lastAccess;
+    private Timestamp lastPasswordChange;
     
     public User() {
     }
     
-    public User(int id, String login, String email, String fullname, UserStatus status, UserPrivilege privilege, String password, Date lastAccess, Date lastPasswordChange) {
+    public User(int id, String login, String email, String fullname, UserStatus status, UserPrivilege privilege, String password, Timestamp lastAccess, Timestamp lastPasswordChange) {
         this.id = id;
         this.login = login;
         this.email = email;
@@ -97,19 +97,19 @@ public class User implements Serializable{
         this.password = password;
     }
     
-    public Date getLastAccess() {
+    public Timestamp getLastAccess() {
         return lastAccess;
     }
     
-    public void setLastAccess(Date lastAccess) {
+    public void setLastAccess(Timestamp lastAccess) {
         this.lastAccess = lastAccess;
     }
     
-    public Date getLastPasswordChange() {
+    public Timestamp getLastPasswordChange() {
         return lastPasswordChange;
     }
     
-    public void setLastPasswordChange(Date lastPasswordChange) {
+    public void setLastPasswordChange(Timestamp lastPasswordChange) {
         this.lastPasswordChange = lastPasswordChange;
     }
     
